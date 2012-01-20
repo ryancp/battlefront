@@ -42,8 +42,10 @@ this.battlefront = {
     });
   },
 
-  // Set base URL to the gateway
-  apiBaseUrl: "http://app.battlefront.dev/gateway/curl",
+  config: {
+    // Set base URL to the gateway
+    apiBaseUrl: "http://app.battlefront.dev/gateway/curl"
+  },
 
   // Keep active application instances namespaced under an app object.
   app: _.extend({}, Backbone.Events)

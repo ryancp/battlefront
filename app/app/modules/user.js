@@ -5,7 +5,7 @@
 	});
 
 	User.Collection = Backbone.Collection.extend({
-		url: battlefront.apiBaseUrl,
+		url: battlefront.config.apiBaseUrl,
 		model: User.Model
 	});
 
