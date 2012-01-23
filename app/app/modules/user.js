@@ -5,7 +5,7 @@
 	});
 
 	User.Collection = Backbone.Collection.extend({
-		url: battlefront.config.apiBaseUrl,
+		url: battlefront.application_config.apiBaseUrl,
 		model: User.Model
 	});
 
@@ -13,11 +13,11 @@
 
 	User.Router = Backbone.Router.extend({
 		routes: {
-      		"user": "userList",
+			"user": "userList",
       		"user/:id": "userDetail"
-    	},
-    	userList: function() {
-			var params = {
+      	},
+      	userList: function() {
+      		var params = {
 				controller: "user"
 			};
 
@@ -26,8 +26,8 @@
 			});
 
 			var userList = new User.Views.List({collection: userCollection});
-    	},
-    	userDetail: function(id) {
+		},
+		userDetail: function(id) {
 			var params = {
 				controller: "user",
 				id: id
@@ -37,11 +37,13 @@
 				data: params
 			});
 
-			var userDetail = new User.Views.Detail({collection: userCollection});
-    	}
+			var userDetail = new User.Views.Detail({
+                collection: userCollection,
+                id: id
+            });
+        }
 	});
 
-	// This will fetch the user template and render it.
 	User.Views.List = Backbone.View.extend({
 		initialize: function() {
 			_.bindAll(this, 'render');
@@ -51,10 +53,10 @@
 		template: "app/templates/user/list.html",
 
 		render: function() {
-			//console.log(this.collection.toJSON());
 			var view = this;
-			var done = function(el) {
-				$("#main").html(el);
+			var done = function(view) {
+				$("#main").html(view.el);
+				view.collection.unbind("reset", this.render);
 			};
 
 			view.data = {
@@ -65,7 +67,7 @@
 			battlefront.fetchTemplate(this.template, function(tmpl) {
 				view.el.innerHTML = tmpl(view.data);
 
-				done(view.el);
+				done(view);
 			});
 		}
 	});
@@ -79,19 +81,18 @@
 		template: "app/templates/user/detail.html",
 
 		render: function() {
-			//console.log(this.collection.toJSON());
 			var view = this;
-			var done = function(el) {
-				$("#main").html(el);
+			var done = function() {
+				$("#main").html(view.el);
+				view.collection.unbind("reset", this.render);
 			};
 
-			//there is only one item in our collection, so get that "first" (and only) item and send it to our detail view template
 			view.data = this.collection.first().attributes;
 
 			battlefront.fetchTemplate(this.template, function(tmpl) {
 				view.el.innerHTML = tmpl(view.data);
 
-				done(view.el);
+				done(view);
 			});
 		}
 	});

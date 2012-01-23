@@ -42,7 +42,7 @@ this.battlefront = {
     });
   },
 
-  config: {
+  application_config: {
     // Set base URL to the gateway
     apiBaseUrl: "http://app.battlefront.dev/gateway/curl"
   },
