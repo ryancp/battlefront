@@ -80,21 +80,77 @@
 
 		template: "app/templates/user/detail.html",
 
+		events: {
+			"click button.edit": "editThis"
+		},
+
 		render: function() {
 			var view = this;
 			var done = function() {
 				$("#main").html(view.el);
+
+				$("button.edit").button();
 				view.collection.unbind("reset", this.render);
 			};
 
-			view.data = this.collection.first().attributes;
+			user = this.collection.get(this.id);
+			view.data = user.toJSON();
 
 			battlefront.fetchTemplate(this.template, function(tmpl) {
 				view.el.innerHTML = tmpl(view.data);
 
 				done(view);
 			});
+		},
+
+		editThis: function(event) {
+			var editUser = new User.Views.AddEdit({model: user});
+			editUser.render();
 		}
+	});
+
+	User.Views.AddEdit = Backbone.View.extend({
+		initialize: function() {
+			_.bindAll(this, 'render');
+		},
+
+		template: "app/templates/user/add_edit.html",
+
+		events: {
+			"click button.save": "saveThis",
+			"click button.cancel": "cancelThis"
+		},
+
+		render: function() {
+			var view = this;
+			var done = function() {
+				$("#main").html(view.el);
+
+				$("button.save").button();
+				$("button.cancel").button();
+			};
+
+			user = this.model
+			view.data = user.toJSON();
+
+			battlefront.fetchTemplate(this.template, function(tmpl) {
+				view.el.innerHTML = tmpl(view.data);
+
+				done(view);
+			});
+		},
+
+		saveThis: function(event) {
+			alert('save user');
+		},
+
+		cancelThis: function(event) {
+			var userDetail = new User.Views.Detail({
+				collection: userCollection,
+				id: user.id
+			});
+			userDetail.render();
+		},
 	});
 
 	var userRouter = new User.Router();
