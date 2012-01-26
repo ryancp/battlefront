@@ -14,10 +14,10 @@
 	User.Router = Backbone.Router.extend({
 		routes: {
 			"user": "userList",
-      		"user/:id": "userDetail"
-      	},
-      	userList: function() {
-      		var params = {
+			"user/:id": "userDetail"
+		},
+		userList: function() {
+			var params = {
 				controller: "user"
 			};
 
@@ -38,10 +38,10 @@
 			});
 
 			var userDetail = new User.Views.Detail({
-                collection: userCollection,
-                id: id
-            });
-        }
+				collection: userCollection,
+				id: id
+			});
+		}
 	});
 
 	User.Views.List = Backbone.View.extend({
