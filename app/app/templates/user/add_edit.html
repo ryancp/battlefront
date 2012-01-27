@@ -1,0 +1,19 @@
+<div id="user-detail" class="add">
+	<p>Editing <strong><%= first_name %> <%= last_name %></strong> | <button class="save">Save</button></p>
+	<ul>
+		<li><%= id %></li>
+		<li>
+			<label for="email">Email:</label>
+			<input name="email" type="text" value="<%= email %>" />
+		</li>
+		<li>
+			<label for="gender">Gender:</label>
+			<select id ="gender" name="gender">
+				<option value="m" <% if (gender == 'm') { %>selected<% } %>>Male</option>
+				<option value="f" <% if (gender == 'f') { %>selected<% } %>>Female</option>
+			</select>
+		</li>
+	</ul>
+</div>
+
+<p><button class="cancel">Cancel</button></p>
