@@ -1,10 +1,10 @@
 <div id="user-detail" class="add">
-	<p>Editing <strong><%= first_name %> <%= last_name %></strong> | <button class="save ui-button-success">Save</button></p>
+	<p>Editing <strong><%= first_name %> <%= last_name %></strong> | <button class="cancel ui-button-danger">Cancel</button></p>
 	<ul>
 		<li><%= id %></li>
 		<li>
 			<label for="email">Email:</label>
-			<input name="email" type="text" value="<%= email %>" />
+			<input id="email" name="email" type="text" value="<%= email %>" />
 		</li>
 		<li>
 			<label for="gender">Gender:</label>
@@ -16,4 +16,4 @@
 	</ul>
 </div>
 
-<p><button class="cancel ui-button-danger">Cancel</button></p>
+<button class="save ui-button-success">Save</button>

@@ -1,0 +1,7 @@
+.invalid {
+	border: 3px solid #ee1010!important;
+}
+
+button.disabled {
+	background: #ccc;
+}
