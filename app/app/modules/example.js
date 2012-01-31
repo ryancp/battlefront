@@ -21,18 +21,39 @@
 
   // This will fetch the tutorial template and render it.
   Example.Views.Tutorial = Backbone.View.extend({
-    template: "app/templates/example.html",
+	template: "app/templates/example.html",
 
-    render: function(done) {
-      var view = this;
+	render: function(done) {
+	  var view = this;
 
-      // Fetch the template, render it to the View element and call done.
-      battlefront.fetchTemplate(this.template, function(tmpl) {
-        view.el.innerHTML = tmpl();
+	  var done = function() {
+		$("#main").html(view.el);
 
-        done(view.el);
-      });
-    }
+		$('#test5 input[value=on]').button().click(function() {
+		  $(this).prevAll('.target').widgeto({
+			change: function(evt, x){
+			  $('.level', this).text(x); // callback function
+			}
+		  })
+		  .unbind('green5done') // in case 'on' is clicked more than once
+		  .bind('green5done', function() {
+			$('.level', this).text('undefined');
+			alert('bye!');
+		  });
+		});
+		$('#test5 input[value=darker]').button().click(function() {$(this).prevAll('.target').widgeto('darker')});
+		$('#test5 input[value=lighter]').button().click(function() {$(this).prevAll('.target').widgeto('lighter')});
+		$('#test5 input[value=off]').button().click(function() {$(this).prevAll('.target').widgeto('off')});
+
+	  };
+
+	  // Fetch the template, render it to the View element and call done.
+	  battlefront.fetchTemplate(this.template, function(tmpl) {
+		view.el.innerHTML = tmpl();
+
+		done(view);
+	  });
+	}
   });
 
 })(battlefront.module("example"));

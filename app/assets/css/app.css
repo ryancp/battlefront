@@ -5,3 +5,10 @@
 button.disabled {
 	background: #ccc;
 }
+
+.error-message {
+	color: #fff;
+	background-color: #c81414;
+	padding: 5px;
+	margin-left: 5px;
+}

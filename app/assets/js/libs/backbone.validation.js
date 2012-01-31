@@ -144,12 +144,16 @@ Backbone.Validation.callbacks = {
         view.$('[' + selector + '~=' + attr + ']')
             .removeClass('invalid')
             .removeAttr('data-error');
+        view.$('.' + attr + '.error-message')
+            .remove();
     },
 
     invalid: function(view, attr, error, selector) {
         view.$('[' + selector + '~=' + attr + ']')
             .addClass('invalid')
             .attr('data-error', error);
+        view.$('[' + selector + '~=' + attr + ']')
+            .after('<span class="' + attr + ' error-message">' + error + '</span>');
     }
 };
 

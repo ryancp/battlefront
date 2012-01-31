@@ -8,7 +8,8 @@
 
 		validation: {
 			email: {
-				pattern: 'email'
+				pattern: 'email',
+				msg: 'Please enter a valid email address'
 			}
 		}
 	});
@@ -120,9 +121,8 @@
 
 	User.Views.AddEdit = Backbone.View.extend({
 		initialize: function() {
-			_.bindAll(this, 'render');
-			//this.model.bind('validated:invalid', this.validationError);
-			//this.model.bind('validated:valid', this.validationPass);
+			this.model.bind('validated:invalid', this.validationError, this);
+			this.model.bind('validated:valid', this.validationPass, this);
 			//use backbone.memento to store model's original state, so it's easy to revert back to this upon "Cancel"
 			this.model.store();
 		},
@@ -166,6 +166,7 @@
 					collection: userCollection,
 					id: this.model.id
 				});
+				this.close();
 				userDetail.render();
 			}
 		},
@@ -177,8 +178,9 @@
 				collection: userCollection,
 				id: this.model.id
 			});
+			this.close();
 			userDetail.render();
-		}/*,
+		},
 
 		validationError: function() {
 			$("button.save").attr("disabled", "true");
@@ -188,7 +190,11 @@
 		validationPass: function() {
 			$("button.save").attr("disabled", "false");
 			$("button.save").removeClass("disabled");
-		}*/
+		},
+
+		close: function(event) {
+			this.model.unbind('validated:invalid', this.validationError, this);
+		}
 
 	});
 
